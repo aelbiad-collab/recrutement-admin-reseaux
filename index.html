@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recrutement — Administrateur Réseaux Systèmes H/F</title>
+<style>
+  :root {
+    --orange: #f97316;
+    --orange-dark: #ea580c;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --bg: #f8fafc;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: var(--dark);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: #fff;
+    padding: 64px 0 56px;
+    text-align: center;
+  }
+  header.hero .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 20px;
+  }
+  header.hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+  header.hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  header.hero .meta {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    opacity: 0.95;
+  }
+
+  section { padding: 56px 0; }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 640px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+  .skill-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .skill-card h3 {
+    color: var(--orange-dark);
+    font-size: 1.15rem;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-card ul { list-style: none; }
+  .skill-card li {
+    padding: 6px 0 6px 22px;
+    position: relative;
+    color: var(--gray);
+    font-size: 0.95rem;
+  }
+  .skill-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .mission-list {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .mission-list li {
+    padding: 10px 0 10px 26px;
+    position: relative;
+    color: var(--gray);
+  }
+  .mission-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .apply-section { background: #fff; border-top: 1px solid var(--border); }
+  form {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 560px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+  .field { margin-bottom: 18px; }
+  .field label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+  .field label .req { color: var(--orange-dark); }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #fff;
+    color: var(--dark);
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+  }
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .file-drop {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color .15s;
+  }
+  .file-drop:hover, .file-drop.dragover { border-color: var(--orange); }
+  .file-drop input[type="file"] { display: none; }
+  .file-drop .hint { color: var(--gray); font-size: 0.85rem; margin-top: 4px; }
+  .file-name {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--orange-dark);
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background .15s;
+  }
+  button[type="submit"]:hover { background: var(--orange-dark); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  #form-status {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  #form-status.success { display: block; background: #dcfce7; color: #166534; }
+  #form-status.error { display: block; background: #fee2e2; color: #991b1b; }
+
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--gray);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <span class="tag">NOUS RECRUTONS</span>
+    <h1>Administrateur Réseaux Systèmes H/F</h1>
+    <p>Direction des Systèmes d'Information (DSI) d'une société pétrolière — infrastructures, réseaux et cybersécurité.</p>
+    <div class="meta">
+      <span>📧 aelbiad@gmail.com</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <h2>Vos missions</h2>
+    <ul class="mission-list">
+      <li>Administrer les environnements serveurs (Windows, Linux) et la virtualisation (VMware, Hyper-V, Proxmox).</li>
+      <li>Concevoir, administrer et faire évoluer le réseau (LAN/WAN, WLAN, VPN).</li>
+      <li>Configurer et maintenir les routeurs, commutateurs, contrôleurs WiFi et équipements réseau.</li>
+      <li>Administrer les plateformes cloud (Azure, AWS, souverain).</li>
+      <li>Superviser les sauvegardes &amp; restaurations, gérer les Endpoint et la téléphonie IP.</li>
+      <li>Administrer les Firewall XG (Fortinet), gérer les EDR/XDR et déployer les correctifs.</li>
+      <li>Assurer la cybersécurité : IDS/IPS, SIEM, gestion des accès/MFA, gestion des vulnérabilités.</li>
+      <li>Administrer les solutions Microsoft de messagerie et de collaboration.</li>
+      <li>Administrer les plateformes de supervision.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Profil recherché</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>🎓 Formation &amp; expérience</h3>
+        <ul>
+          <li>Bac+4/5 spécialisé informatique (ingénieur réseau, télécoms ou équivalent)</li>
+          <li>4 ans et plus en administration d'infrastructures et systèmes</li>
+          <li>Expérience confirmée en environnement multisites et hybride</li>
+          <li>Conduite de projets techniques</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>🧠 Compétences personnelles</h3>
+        <ul>
+          <li>Sens de l'organisation et aisance relationnelle</li>
+          <li>Esprit d'analyse et de diagnostic</li>
+          <li>Résistance au stress et gestion des urgences</li>
+          <li>Capacité à documenter et formaliser les processus</li>
+          <li>Excellente communication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="apply-section">
+  <div class="container">
+    <h2>Postuler</h2>
+    <form id="apply-form" novalidate>
+      <div class="form-row">
+        <div class="field">
+          <label for="nom">Nom <span class="req">*</span></label>
+          <input type="text" id="nom" name="nom" required>
+        </div>
+        <div class="field">
+          <label for="prenom">Prénom <span class="req">*</span></label>
+          <input type="text" id="prenom" name="prenom" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="telephone">Téléphone <span class="req">*</span></label>
+          <input type="tel" id="telephone" name="telephone" required>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="experienceTotale">Expérience totale <span class="req">*</span></label>
+          <select id="experienceTotale" name="experienceTotale" required>
+            <option value="">Sélectionner...</option>
+            <option>Moins de 2 ans</option>
+            <option>2 à 5 ans</option>
+            <option>5 à 10 ans</option>
+            <option>Plus de 10 ans</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="disponibilite">Disponibilité <span class="req">*</span></label>
+          <select id="disponibilite" name="disponibilite" required>
+            <option value="">Sélectionner...</option>
+            <option>Immédiate</option>
+            <option>Sous 15 jours</option>
+            <option>Sous 1 mois</option>
+            <option>Préavis en cours</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="experienceMicrosoft">Expérience serveurs, virtualisation &amp; Microsoft <span class="req">*</span></label>
+        <textarea id="experienceMicrosoft" name="experienceMicrosoft" required placeholder="Ex: 4 ans — Windows/Linux, VMware/Hyper-V/Proxmox, messagerie et collaboration Microsoft..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="experienceFortinet">Expérience réseau, cloud &amp; cybersécurité (Fortinet) <span class="req">*</span></label>
+        <textarea id="experienceFortinet" name="experienceFortinet" required placeholder="Ex: 3 ans — LAN/WAN/VPN, Azure/AWS, Firewall Fortinet XG, IDS/IPS, SIEM..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="lieu">Lieu actuel</label>
+        <input type="text" id="lieu" name="lieu" placeholder="Ville">
+      </div>
+
+      <div class="field">
+        <label for="message">Message (optionnel)</label>
+        <textarea id="message" name="message" placeholder="Motivation, prétentions salariales, disponibilités..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>CV (PDF ou Word) <span class="req">*</span></label>
+        <div class="file-drop" id="file-drop">
+          <div>📎 Cliquez pour joindre votre CV</div>
+          <div class="hint">PDF ou DOCX, 5 Mo maximum</div>
+          <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+          <div class="file-name" id="file-name"></div>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-btn">Envoyer ma candidature</button>
+      <div id="form-status"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Candidature transmise en toute confidentialité — aelbiad@gmail.com
+  </div>
+</footer>
+
+<script>
+  // Remplacer par l'URL /exec obtenue après déploiement du Google Apps Script
+  // (voir gas/README.md pour la procédure de déploiement).
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwUqOYpy0gwg9CpoKgct2U2V5hh5cIVwHxXDssqw60cQzBxg1mIO6V0KbkE9pyLztiw/exec';
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 Mo
+
+  const form = document.getElementById('apply-form');
+  const fileInput = document.getElementById('cv');
+  const fileDrop = document.getElementById('file-drop');
+  const fileNameEl = document.getElementById('file-name');
+  const statusEl = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  fileDrop.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) {
+      fileNameEl.textContent = fileInput.files[0].name;
+    }
+  });
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function showStatus(type, message) {
+    statusEl.className = type;
+    statusEl.textContent = message;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    showStatus('', '');
+
+    const file = fileInput.files[0];
+    if (!file) {
+      showStatus('error', 'Merci de joindre votre CV.');
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      showStatus('error', 'Le fichier dépasse 5 Mo. Merci de réduire sa taille.');
+      return;
+    }
+    if (WEBAPP_URL.indexOf('REMPLACER_PAR_URL') !== -1) {
+      showStatus('error', "Configuration incomplète : l'URL du formulaire n'a pas été définie.");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    try {
+      const cvBase64 = await fileToBase64(file);
+      const payload = {
+        nom: document.getElementById('nom').value.trim(),
+        prenom: document.getElementById('prenom').value.trim(),
+        telephone: document.getElementById('telephone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        experienceTotale: document.getElementById('experienceTotale').value,
+        experienceMicrosoft: document.getElementById('experienceMicrosoft').value.trim(),
+        experienceFortinet: document.getElementById('experienceFortinet').value.trim(),
+        disponibilite: document.getElementById('disponibilite').value,
+        lieu: document.getElementById('lieu').value.trim(),
+        message: document.getElementById('message').value.trim(),
+        cvFileName: file.name,
+        cvMimeType: file.type,
+        cvBase64: cvBase64
+      };
+
+      // Content-Type volontairement omis (texte brut) pour éviter le
+      // préflight CORS que Google Apps Script ne gère pas.
+      await fetch(WEBAPP_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      showStatus('success', 'Votre candidature a bien été envoyée. Merci, nous reviendrons vers vous rapidement !');
+      form.reset();
+      fileNameEl.textContent = '';
+    } catch (err) {
+      showStatus('error', "Une erreur est survenue lors de l'envoi. Merci de réessayer ou de nous écrire directement à aelbiad@gmail.com.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Envoyer ma candidature';
+    }
+  });
+</script>
+
+</body>
+</html>
