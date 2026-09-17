@@ -265,8 +265,9 @@
 </footer>
 
 <script>
-  // Même backend Google Apps Script que index.html (voir gas/README.md).
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwUqOYpy0gwg9CpoKgct2U2V5hh5cIVwHxXDssqw60cQzBxg1mIO6V0KbkE9pyLztiw/exec';
+  // Backend dédié au glossaire (projet Apps Script "Glossary-MBA",
+  // distinct du script de recrutement — voir gas-glossaire/README.md).
+  const WEBAPP_URL = 'REMPLACER_PAR_URL_GLOSSARY_MBA';
 
   const SEED_GLOSSAIRE = [
     { terme: "VPN", famille: "Réseau",
@@ -427,7 +428,12 @@
   }
   majDatalist();
 
+  function backendConfigure() {
+    return WEBAPP_URL.indexOf('REMPLACER_PAR_URL') === -1;
+  }
+
   async function chargerGlossaireDistant() {
+    if (!backendConfigure()) return;
     try {
       const res = await fetch(WEBAPP_URL + '?action=glossaire');
       const data = await res.json();
@@ -497,10 +503,17 @@
 
   addBtn.addEventListener('click', async function () {
     const terme = notFoundTermeEl.textContent;
-    addBtn.disabled = true;
-    addBtn.textContent = 'Recherche en cours...';
     addStatusEl.className = '';
     addStatusEl.textContent = '';
+
+    if (!backendConfigure()) {
+      addStatusEl.className = 'error';
+      addStatusEl.textContent = "Configuration incomplète : l'URL du backend glossaire (projet Glossary-MBA) n'a pas été définie.";
+      return;
+    }
+
+    addBtn.disabled = true;
+    addBtn.textContent = 'Recherche en cours...';
 
     try {
       const res = await fetch(WEBAPP_URL, {

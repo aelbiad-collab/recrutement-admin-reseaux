@@ -9,11 +9,8 @@ l'intake de profils freelance) pour ne rien casser de ce qui existait déjà.
 Il réutilise le même dossier Drive `CVTheque`, dans un sous-dossier `CV_AdminSys`,
 et une nouvelle feuille `CVTheque_AdminSys`.
 
-Il sert aussi de backend au **glossaire technique** (`glossaire.html`) : quand
-un terme n'existe pas encore, l'application appelle ce script qui interroge
-l'API Anthropic (Claude) pour générer la définition, puis l'enregistre dans
-une feuille `Glossaire_AdminSys`, dans son propre dossier Drive dédié
-`Glossaire MDB` (distinct de `CVTheque`).
+Le glossaire technique (`glossaire.html`) a son propre backend, séparé,
+dans le dossier `gas-glossaire/` (projet Apps Script "Glossary-MBA").
 
 ## Déploiement (à faire une seule fois)
 
@@ -31,25 +28,7 @@ une feuille `Glossaire_AdminSys`, dans son propre dossier Drive dédié
 6. Cliquer sur **Déployer**, autoriser les permissions demandées (Drive,
    Sheets, Gmail) — c'est votre propre script, sous votre propre compte.
 7. Copier l'URL `.../exec` fournie.
-8. Dans `index.html` **et** `glossaire.html`, remplacer la constante
-   `WEBAPP_URL` par cette URL (elle est déjà pré-remplie si vous réutilisez
-   un déploiement existant).
-
-## Configurer la clé API Anthropic (nécessaire pour le glossaire)
-
-Le bouton "Ajouter au glossaire" appelle l'API Anthropic (Claude) pour
-générer automatiquement la définition d'un terme absent. Il faut donc :
-
-1. Récupérer une clé API sur https://console.anthropic.com (section API Keys).
-2. Dans l'éditeur Apps Script, ouvrir **Paramètres du projet** (icône ⚙️ à
-   gauche) → section **Propriétés du script** → **Ajouter une propriété du
-   script**.
-3. Nom de la propriété : `ANTHROPIC_API_KEY` — Valeur : votre clé API.
-4. Enregistrer. La clé n'est jamais exposée côté client : elle reste sur le
-   serveur Apps Script.
-
-Sans cette propriété, la recherche automatique échoue avec un message
-d'erreur explicite côté application (le reste du glossaire reste utilisable).
+8. Dans `index.html`, remplacer la constante `WEBAPP_URL` par cette URL.
 
 ## Test rapide
 
@@ -58,18 +37,8 @@ menu déroulant en haut, puis cliquer sur **Exécuter**. Cela simule une
 candidature de test : vous devez recevoir un email et voir une ligne
 apparaître dans `CVTheque_AdminSys` (dossier Drive `CVTheque`).
 
-Pour tester le glossaire, sélectionner `testerGlossaire` puis **Exécuter** :
-cela ajoute le terme "DHCP" et affiche le résultat dans les logs
-(**Affichage → Journaux d'exécution**). Un dossier Drive `Glossaire MDB`
-contenant une feuille `Glossaire_AdminSys` doit apparaître.
-
 ## Mise à jour ultérieure
 
 Si vous modifiez `Code.gs`, il faut recoller le contenu dans l'éditeur
 Apps Script puis faire **Déployer → Gérer les déploiements → ✏️ (modifier) →
 Nouvelle version → Déployer**. L'URL `.../exec` reste la même.
-
-Comme le script appelle désormais un service externe (API Anthropic) via
-`UrlFetchApp`, la prochaine autorisation vous demandera une permission
-supplémentaire ("se connecter à un service externe") — c'est normal, il
-s'agit toujours de votre propre script.
