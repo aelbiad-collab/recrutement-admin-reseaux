@@ -8,11 +8,12 @@
 // ════════════════════════════════════════════════════════════
 
 const CONFIG = {
-  EMAIL_DESTINATAIRE:  'aelbiad@gmail.com',
-  NOM_DOSSIER_DRIVE:   'CVTheque',
-  NOM_SHEET:           'CVTheque_AdminSys',
-  NOM_SHEET_GLOSSAIRE: 'Glossaire_AdminSys',
-  MODELE_IA:           'claude-haiku-4-5-20251001',
+  EMAIL_DESTINATAIRE:   'aelbiad@gmail.com',
+  NOM_DOSSIER_DRIVE:    'CVTheque',
+  NOM_SHEET:            'CVTheque_AdminSys',
+  NOM_DOSSIER_GLOSSAIRE: 'Glossaire MDB',
+  NOM_SHEET_GLOSSAIRE:  'Glossaire_AdminSys',
+  MODELE_IA:            'claude-haiku-4-5-20251001',
 };
 
 const HEADERS = [
@@ -295,7 +296,7 @@ function chercherDefinitionIA(terme) {
 }
 
 function obtenirOuCreerSheetGlossaire() {
-  const dossier = obtenirOuCreerDossier(CONFIG.NOM_DOSSIER_DRIVE);
+  const dossier = obtenirOuCreerDossier(CONFIG.NOM_DOSSIER_GLOSSAIRE);
   const fichiers = dossier.getFilesByName(CONFIG.NOM_SHEET_GLOSSAIRE);
   let spreadsheet;
   if (fichiers.hasNext()) {

@@ -12,7 +12,8 @@ et une nouvelle feuille `CVTheque_AdminSys`.
 Il sert aussi de backend au **glossaire technique** (`glossaire.html`) : quand
 un terme n'existe pas encore, l'application appelle ce script qui interroge
 l'API Anthropic (Claude) pour générer la définition, puis l'enregistre dans
-une feuille dédiée `Glossaire_AdminSys` (même dossier Drive `CVTheque`).
+une feuille `Glossaire_AdminSys`, dans son propre dossier Drive dédié
+`Glossaire MDB` (distinct de `CVTheque`).
 
 ## Déploiement (à faire une seule fois)
 
@@ -59,8 +60,8 @@ apparaître dans `CVTheque_AdminSys` (dossier Drive `CVTheque`).
 
 Pour tester le glossaire, sélectionner `testerGlossaire` puis **Exécuter** :
 cela ajoute le terme "DHCP" et affiche le résultat dans les logs
-(**Affichage → Journaux d'exécution**). Une feuille `Glossaire_AdminSys`
-doit apparaître dans le dossier Drive `CVTheque`.
+(**Affichage → Journaux d'exécution**). Un dossier Drive `Glossaire MDB`
+contenant une feuille `Glossaire_AdminSys` doit apparaître.
 
 ## Mise à jour ultérieure
 
