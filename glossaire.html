@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossaire — Réseaux, Systèmes &amp; Cybersécurité</title>
+<meta name="description" content="Glossaire technique interactif : réseau, virtualisation, cloud et cybersécurité. Recherchez un terme, obtenez sa famille, son explication, un exemple concret et un schéma.">
+<style>
+  :root {
+    --orange: #f97316;
+    --orange-dark: #ea580c;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --bg: #f8fafc;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: var(--dark);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: #fff;
+    padding: 56px 0 48px;
+    text-align: center;
+  }
+  header.hero .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 20px;
+  }
+  header.hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  header.hero p {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  header.hero .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #fff;
+    opacity: 0.9;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+  }
+  header.hero .back-link:hover { opacity: 1; }
+
+  section { padding: 40px 0 64px; }
+
+  .search-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 640px;
+    margin: -48px auto 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 1;
+  }
+  .search-box input {
+    flex: 1 1 260px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+  }
+  .search-box button {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .search-box button:hover { background: var(--orange-dark); }
+
+  .hint-terms {
+    max-width: 640px;
+    margin: 14px auto 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+
+  #not-found, .result-card {
+    max-width: 640px;
+    margin: 28px auto 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+  }
+  #not-found { text-align: center; }
+  #not-found p { margin-bottom: 16px; color: var(--gray); }
+
+  #add-btn {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  #add-btn:hover:not(:disabled) { background: var(--orange-dark); }
+  #add-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  #add-status {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+  }
+  #add-status.error { background: #fee2e2; color: #991b1b; }
+  #add-status.success { background: #dcfce7; color: #166534; }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .result-header h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--dark);
+  }
+  .famille-badge {
+    display: inline-block;
+    background: rgba(249,115,22,0.12);
+    color: var(--orange-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .result-section { margin-bottom: 22px; }
+  .result-section:last-child { margin-bottom: 0; }
+  .result-section h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .result-section p { color: var(--dark); font-size: 0.98rem; }
+
+  .schema-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .schema-step {
+    background: var(--bg);
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark);
+    text-align: center;
+  }
+  .schema-arrow {
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--gray);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <span class="tag">GLOSSAIRE TECHNIQUE</span>
+    <h1>Réseaux, Systèmes &amp; Cybersécurité</h1>
+    <p>Recherchez un terme du domaine : famille, explication, exemple concret et schéma. Un terme absent ? L'application le recherche et l'ajoute automatiquement.</p>
+    <a class="back-link" href="index.html">← Retour à l'offre d'emploi</a>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="terme-input" list="termes-list" placeholder="Ex : VPN, Firewall, Hyperviseur..." autocomplete="off">
+      <datalist id="termes-list"></datalist>
+      <button id="search-btn" type="button">🔍 Rechercher</button>
+    </div>
+    <p class="hint-terms" id="compteur-termes"></p>
+
+    <div id="not-found" style="display:none">
+      <p>Le terme « <strong id="not-found-terme"></strong> » n'existe pas encore dans le glossaire.</p>
+      <button id="add-btn" type="button">➕ Ajouter au glossaire</button>
+      <div id="add-status"></div>
+    </div>
+
+    <div class="result-card" id="result-card" style="display:none">
+      <div class="result-header">
+        <h2 id="result-terme"></h2>
+        <span class="famille-badge" id="result-famille"></span>
+      </div>
+      <div class="result-section">
+        <h4>Explication</h4>
+        <p id="result-explication"></p>
+      </div>
+      <div class="result-section">
+        <h4>Exemple concret</h4>
+        <p id="result-exemple"></p>
+      </div>
+      <div class="result-section">
+        <h4>Schéma explicatif</h4>
+        <div class="schema-flow" id="result-schema"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Glossaire évolutif — aelbiad@gmail.com
+  </div>
+</footer>
+
+<script>
+  // Même backend Google Apps Script que index.html (voir gas/README.md).
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwUqOYpy0gwg9CpoKgct2U2V5hh5cIVwHxXDssqw60cQzBxg1mIO6V0KbkE9pyLztiw/exec';
+
+  const SEED_GLOSSAIRE = [
+    { terme: "VPN", famille: "Réseau",
+      explication: "Un VPN (Virtual Private Network) crée un tunnel chiffré entre un poste distant et le réseau de l'entreprise, permettant d'accéder aux ressources internes comme si l'utilisateur était sur place.",
+      exempleConcret: "Un technicien en déplacement se connecte au VPN de l'entreprise pour accéder au serveur de fichiers interne depuis un hôtel.",
+      schemaEtapes: ["Poste distant", "Client VPN", "Tunnel chiffré (Internet)", "Passerelle VPN", "Réseau interne"] },
+    { terme: "LAN", famille: "Réseau",
+      explication: "Le LAN (Local Area Network) est un réseau local qui relie les équipements d'un même site (bureaux, salle serveur), généralement à haut débit et faible latence.",
+      exempleConcret: "Tous les postes et imprimantes d'un même étage sont connectés au commutateur du LAN de l'agence.",
+      schemaEtapes: ["Postes de travail", "Commutateur (Switch)", "Serveur local", "Imprimante réseau"] },
+    { terme: "WAN", famille: "Réseau",
+      explication: "Le WAN (Wide Area Network) interconnecte des réseaux géographiquement distants, par exemple plusieurs sites d'une entreprise, via des liens opérateurs (fibre, MPLS, Internet).",
+      exempleConcret: "Le siège de Casablanca et l'agence de Tanger sont reliés par un lien WAN pour partager le même système d'information.",
+      schemaEtapes: ["Site A (LAN)", "Routeur", "Lien WAN (opérateur)", "Routeur", "Site B (LAN)"] },
+    { terme: "WLAN", famille: "Réseau",
+      explication: "Le WLAN (Wireless LAN) est la version sans fil du réseau local : les équipements se connectent via des ondes radio (WiFi) plutôt que par câble, gérés par un contrôleur centralisé.",
+      exempleConcret: "Les collaborateurs se connectent au WLAN de l'entreprise via leur badge WiFi d'entreprise (WPA2-Enterprise).",
+      schemaEtapes: ["Terminal (PC/mobile)", "Point d'accès WiFi", "Contrôleur WLAN", "Réseau filaire"] },
+    { terme: "Routeur", famille: "Réseau",
+      explication: "Un routeur est un équipement qui achemine les paquets de données entre plusieurs réseaux distincts en choisissant le meilleur chemin, typiquement entre le réseau local et Internet.",
+      exempleConcret: "Le routeur d'agence relie le réseau local au lien opérateur pour donner accès à Internet à tous les postes.",
+      schemaEtapes: ["Réseau local", "Routeur", "Table de routage", "Réseau distant / Internet"] },
+    { terme: "Commutateur", famille: "Réseau",
+      explication: "Un commutateur (switch) relie plusieurs équipements d'un même réseau local et achemine les trames directement vers le bon destinataire grâce à leur adresse MAC.",
+      exempleConcret: "Un switch 48 ports distribue le réseau à tous les postes et imprimantes d'un étage de bureaux.",
+      schemaEtapes: ["Poste A", "Commutateur (table MAC)", "Poste B destinataire"] },
+    { terme: "Contrôleur WiFi", famille: "Réseau",
+      explication: "Un contrôleur WiFi centralise la configuration, la sécurité et la supervision de plusieurs points d'accès sans fil, assurant une itinérance fluide entre eux (roaming).",
+      exempleConcret: "Un contrôleur WiFi gère 20 bornes réparties sur trois étages, avec la même politique de sécurité partout.",
+      schemaEtapes: ["Contrôleur WLAN", "Point d'accès 1", "Point d'accès 2", "Terminaux utilisateurs"] },
+    { terme: "Windows Server", famille: "Systèmes / OS",
+      explication: "Windows Server est le système d'exploitation serveur de Microsoft, utilisé pour héberger des services d'infrastructure comme l'annuaire Active Directory, les partages de fichiers ou les applications métier.",
+      exempleConcret: "Un serveur Windows Server héberge l'Active Directory et les partages réseau d'une PME.",
+      schemaEtapes: ["Matériel serveur / VM", "Windows Server", "Rôles (AD, DNS, fichiers)", "Clients du réseau"] },
+    { terme: "Linux", famille: "Systèmes / OS",
+      explication: "Linux est un système d'exploitation open source largement utilisé sur les serveurs pour sa stabilité et sa légèreté, notamment pour héberger des applications web, des bases de données ou des conteneurs.",
+      exempleConcret: "Un serveur Linux héberge un site web et une base de données MySQL pour l'application interne.",
+      schemaEtapes: ["Matériel serveur / VM", "Noyau Linux", "Services (web, BDD)", "Utilisateurs / applications"] },
+    { terme: "Active Directory", famille: "Systèmes / OS",
+      explication: "Active Directory est l'annuaire centralisé de Microsoft qui gère les comptes utilisateurs, les postes, les groupes et les droits d'accès sur l'ensemble d'un réseau d'entreprise.",
+      exempleConcret: "Un administrateur crée un nouveau compte utilisateur dans Active Directory pour donner accès aux ressources du réseau à un nouvel employé.",
+      schemaEtapes: ["Contrôleur de domaine (AD)", "Comptes & groupes", "Stratégies (GPO)", "Postes et serveurs membres"] },
+    { terme: "Exchange", famille: "Téléphonie / Collaboration",
+      explication: "Microsoft Exchange est la plateforme de messagerie d'entreprise qui gère les emails, calendriers et contacts, disponible en version serveur (on-premise) ou dans le cloud via Exchange Online.",
+      exempleConcret: "Les boîtes mail de tous les employés sont hébergées sur Exchange Online, accessibles depuis Outlook.",
+      schemaEtapes: ["Client de messagerie (Outlook)", "Serveur Exchange", "Boîte aux lettres", "Destinataire"] },
+    { terme: "VMware", famille: "Virtualisation",
+      explication: "VMware est une solution de virtualisation qui permet de faire fonctionner plusieurs machines virtuelles indépendantes sur un même serveur physique, optimisant l'utilisation des ressources.",
+      exempleConcret: "Un serveur physique VMware héberge 10 machines virtuelles, chacune avec son propre système d'exploitation et ses applications.",
+      schemaEtapes: ["Serveur physique (hôte)", "Hyperviseur VMware ESXi", "VM 1, VM 2, VM 3...", "Applications"] },
+    { terme: "Hyper-V", famille: "Virtualisation",
+      explication: "Hyper-V est la solution de virtualisation intégrée à Windows Server, permettant de créer et gérer des machines virtuelles directement sur un hôte Windows.",
+      exempleConcret: "Une PME utilise Hyper-V sur un serveur Windows pour faire tourner ses machines virtuelles de test et de production.",
+      schemaEtapes: ["Serveur Windows (hôte)", "Hyperviseur Hyper-V", "Machines virtuelles", "Applications"] },
+    { terme: "Proxmox", famille: "Virtualisation",
+      explication: "Proxmox VE est une plateforme de virtualisation open source qui combine machines virtuelles (KVM) et conteneurs (LXC), gérée via une interface web centralisée.",
+      exempleConcret: "Une entreprise migre ses serveurs vers un cluster Proxmox pour réduire ses coûts de licences de virtualisation.",
+      schemaEtapes: ["Serveur physique (hôte)", "Proxmox VE", "VM (KVM) / Conteneurs (LXC)", "Applications"] },
+    { terme: "Machine virtuelle", famille: "Virtualisation",
+      explication: "Une machine virtuelle est un environnement logiciel qui simule un ordinateur complet (CPU, RAM, disque) au sein d'un serveur physique, permettant d'exécuter un système d'exploitation isolé.",
+      exempleConcret: "Chaque application métier de l'entreprise tourne dans sa propre VM pour éviter les conflits entre systèmes.",
+      schemaEtapes: ["Ressources physiques", "Hyperviseur", "VM (OS + application)"] },
+    { terme: "Azure", famille: "Cloud",
+      explication: "Microsoft Azure est une plateforme cloud publique qui propose des serveurs virtuels, du stockage, des services managés et des solutions de sécurité, facturés à l'usage.",
+      exempleConcret: "L'entreprise héberge son application de gestion sur une machine virtuelle Azure plutôt que sur un serveur physique local.",
+      schemaEtapes: ["Utilisateur / Application", "Internet", "Datacenter Azure", "Ressources cloud (VM, stockage...)"] },
+    { terme: "AWS", famille: "Cloud",
+      explication: "Amazon Web Services (AWS) est le plus grand fournisseur de cloud public, offrant serveurs virtuels, stockage, bases de données et services réseau à la demande.",
+      exempleConcret: "Un site web à fort trafic est hébergé sur des serveurs AWS qui s'adaptent automatiquement à la charge.",
+      schemaEtapes: ["Utilisateur / Application", "Internet", "Datacenter AWS", "Ressources cloud (EC2, S3...)"] },
+    { terme: "Cloud souverain", famille: "Cloud",
+      explication: "Un cloud souverain est une infrastructure cloud hébergée et opérée selon les lois et l'autorité juridique d'un pays ou d'une région donnée, garantissant que les données restent soumises à cette juridiction.",
+      exempleConcret: "Une administration publique héberge ses données sensibles sur un cloud souverain marocain plutôt que sur un cloud américain.",
+      schemaEtapes: ["Données sensibles", "Datacenter national", "Juridiction locale", "Conformité réglementaire"] },
+    { terme: "Sauvegarde", famille: "Sauvegarde & Supervision",
+      explication: "La sauvegarde consiste à copier régulièrement les données critiques vers un support distinct, afin de pouvoir les restaurer en cas de perte, de panne ou de cyberattaque.",
+      exempleConcret: "Chaque nuit, un job de sauvegarde copie les serveurs de fichiers vers un espace de stockage externe.",
+      schemaEtapes: ["Données de production", "Job de sauvegarde", "Stockage de sauvegarde", "Restauration si besoin"] },
+    { terme: "Restauration", famille: "Sauvegarde & Supervision",
+      explication: "La restauration est l'opération qui consiste à récupérer des données ou un système à partir d'une sauvegarde, après une perte, une erreur ou un incident.",
+      exempleConcret: "Après une attaque par ransomware, l'administrateur restaure les serveurs à partir de la sauvegarde de la veille.",
+      schemaEtapes: ["Incident / perte de données", "Sauvegarde disponible", "Procédure de restauration", "Système remis en service"] },
+    { terme: "Supervision", famille: "Sauvegarde & Supervision",
+      explication: "La supervision consiste à surveiller en continu l'état des serveurs, réseaux et applications afin de détecter rapidement pannes, saturations ou anomalies avant qu'elles n'impactent les utilisateurs.",
+      exempleConcret: "Un outil de supervision alerte l'administrateur par email lorsqu'un serveur atteint 90% d'utilisation disque.",
+      schemaEtapes: ["Serveurs & équipements", "Agents / sondes de supervision", "Plateforme de monitoring", "Alerte à l'administrateur"] },
+    { terme: "Endpoint", famille: "Sauvegarde & Supervision",
+      explication: "Un endpoint désigne tout terminal connecté au réseau de l'entreprise (poste de travail, portable, mobile) qui doit être géré et protégé, car il constitue un point d'entrée potentiel pour les menaces.",
+      exempleConcret: "Une solution de gestion des endpoints déploie automatiquement les mises à jour de sécurité sur tous les postes de l'entreprise.",
+      schemaEtapes: ["Terminal (endpoint)", "Agent de gestion / sécurité", "Console centrale", "Politique appliquée"] },
+    { terme: "Téléphonie IP", famille: "Téléphonie / Collaboration",
+      explication: "La téléphonie IP (VoIP) transporte la voix sous forme de données numériques sur le réseau informatique, remplaçant les lignes téléphoniques traditionnelles.",
+      exempleConcret: "Les employés passent leurs appels via des téléphones IP connectés au même réseau que les postes de travail, sans ligne téléphonique classique.",
+      schemaEtapes: ["Téléphone IP", "Réseau LAN", "Serveur de téléphonie (IPBX)", "Correspondant"] },
+    { terme: "Firewall", famille: "Sécurité",
+      explication: "Un firewall (pare-feu) filtre le trafic réseau entrant et sortant selon un ensemble de règles de sécurité, bloquant les connexions non autorisées tout en laissant passer le trafic légitime.",
+      exempleConcret: "Le firewall Fortinet de l'entreprise bloque tout accès entrant non autorisé depuis Internet vers le réseau interne.",
+      schemaEtapes: ["Trafic réseau", "Firewall (règles)", "Autorisé → Réseau interne", "Refusé → Bloqué"] },
+    { terme: "EDR", famille: "Sécurité",
+      explication: "L'EDR (Endpoint Detection and Response) est un logiciel installé sur les postes et serveurs qui détecte les comportements suspects en temps réel et permet d'isoler ou de neutraliser une menace rapidement.",
+      exempleConcret: "L'EDR détecte un processus suspect sur un poste et l'isole automatiquement du réseau avant propagation d'un ransomware.",
+      schemaEtapes: ["Poste / serveur", "Agent EDR", "Détection comportementale", "Alerte + isolement"] },
+    { terme: "XDR", famille: "Sécurité",
+      explication: "Le XDR (Extended Detection and Response) étend l'EDR en corrélant les données de plusieurs sources (postes, réseau, cloud, messagerie) pour une détection et une réponse aux menaces plus globale.",
+      exempleConcret: "Le XDR corrèle une alerte sur un poste avec un comportement réseau suspect pour identifier une attaque coordonnée.",
+      schemaEtapes: ["Postes", "Réseau", "Cloud / messagerie", "Plateforme XDR (corrélation)", "Réponse unifiée"] },
+    { terme: "IDS", famille: "Sécurité",
+      explication: "Un IDS (Intrusion Detection System) surveille le trafic réseau à la recherche de signatures ou de comportements suspects et génère des alertes, sans bloquer le trafic lui-même.",
+      exempleConcret: "L'IDS détecte une tentative de scan de ports depuis une adresse IP externe et alerte l'équipe sécurité.",
+      schemaEtapes: ["Trafic réseau", "Sonde IDS", "Analyse des signatures", "Alerte (sans blocage)"] },
+    { terme: "IPS", famille: "Sécurité",
+      explication: "Un IPS (Intrusion Prevention System) fonctionne comme un IDS mais bloque activement le trafic identifié comme malveillant, en coupure directe sur le flux réseau.",
+      exempleConcret: "L'IPS bloque automatiquement une tentative d'exploitation de vulnérabilité détectée sur le réseau.",
+      schemaEtapes: ["Trafic réseau", "Sonde IPS (en ligne)", "Trafic légitime → Autorisé", "Trafic malveillant → Bloqué"] },
+    { terme: "SIEM", famille: "Sécurité",
+      explication: "Un SIEM (Security Information and Event Management) centralise et corrèle les journaux (logs) de tous les équipements et applications pour détecter des incidents de sécurité et faciliter les investigations.",
+      exempleConcret: "Le SIEM corrèle les logs du firewall, des serveurs et de l'annuaire pour détecter une tentative de connexion suspecte à 3h du matin.",
+      schemaEtapes: ["Firewall, serveurs, AD...", "Collecte des logs", "Moteur de corrélation SIEM", "Alerte de sécurité"] },
+    { terme: "MFA", famille: "Sécurité",
+      explication: "L'authentification multifacteur (MFA) exige au moins deux preuves d'identité différentes (mot de passe + code temporaire, application ou biométrie) pour se connecter, renforçant la sécurité des accès.",
+      exempleConcret: "Pour se connecter à distance, un employé saisit son mot de passe puis valide une notification sur son application mobile.",
+      schemaEtapes: ["Utilisateur", "Mot de passe", "Second facteur (app/SMS/biométrie)", "Accès autorisé"] },
+    { terme: "Gestion des vulnérabilités", famille: "Sécurité",
+      explication: "La gestion des vulnérabilités consiste à identifier, évaluer et corriger en continu les failles de sécurité présentes sur les systèmes, réseaux et applications, avant qu'elles ne soient exploitées.",
+      exempleConcret: "Un scan mensuel révèle une version obsolète d'un serveur ; l'administrateur planifie le déploiement du correctif.",
+      schemaEtapes: ["Scan de vulnérabilités", "Identification des failles", "Priorisation des risques", "Correctif appliqué"] }
+  ];
+
+  function normaliser(texte) {
+    return String(texte || '')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().trim();
+  }
+
+  const glossaire = new Map();
+  SEED_GLOSSAIRE.forEach(function (entree) { glossaire.set(normaliser(entree.terme), entree); });
+
+  const listeInput = document.getElementById('terme-input');
+  const listeDatalist = document.getElementById('termes-list');
+  const compteurEl = document.getElementById('compteur-termes');
+  const notFoundEl = document.getElementById('not-found');
+  const notFoundTermeEl = document.getElementById('not-found-terme');
+  const resultCard = document.getElementById('result-card');
+  const addBtn = document.getElementById('add-btn');
+  const addStatusEl = document.getElementById('add-status');
+
+  function majDatalist() {
+    listeDatalist.innerHTML = '';
+    const entrees = Array.from(glossaire.values()).sort(function (a, b) {
+      return a.terme.localeCompare(b.terme, 'fr');
+    });
+    entrees.forEach(function (entree) {
+      const option = document.createElement('option');
+      option.value = entree.terme;
+      listeDatalist.appendChild(option);
+    });
+    compteurEl.textContent = entrees.length + ' terme(s) référencé(s) — tapez pour rechercher ou obtenir des suggestions.';
+  }
+  majDatalist();
+
+  async function chargerGlossaireDistant() {
+    try {
+      const res = await fetch(WEBAPP_URL + '?action=glossaire');
+      const data = await res.json();
+      if (data.status === 'ok' && Array.isArray(data.termes)) {
+        data.termes.forEach(function (entree) {
+          const cle = normaliser(entree.terme);
+          if (!glossaire.has(cle)) glossaire.set(cle, entree);
+        });
+        majDatalist();
+      }
+    } catch (err) {
+      // Silencieux : le glossaire local reste utilisable même hors-ligne.
+    }
+  }
+  chargerGlossaireDistant();
+
+  function afficherResultat(entree) {
+    notFoundEl.style.display = 'none';
+    document.getElementById('result-terme').textContent = entree.terme;
+    document.getElementById('result-famille').textContent = entree.famille;
+    document.getElementById('result-explication').textContent = entree.explication;
+    document.getElementById('result-exemple').textContent = entree.exempleConcret;
+
+    const schemaEl = document.getElementById('result-schema');
+    schemaEl.innerHTML = '';
+    (entree.schemaEtapes || []).forEach(function (etape, i) {
+      if (i > 0) {
+        const fleche = document.createElement('span');
+        fleche.className = 'schema-arrow';
+        fleche.textContent = '→';
+        schemaEl.appendChild(fleche);
+      }
+      const boite = document.createElement('div');
+      boite.className = 'schema-step';
+      boite.textContent = etape;
+      schemaEl.appendChild(boite);
+    });
+
+    resultCard.style.display = 'block';
+  }
+
+  function afficherNonTrouve(terme) {
+    resultCard.style.display = 'none';
+    notFoundTermeEl.textContent = terme;
+    addStatusEl.className = '';
+    addStatusEl.textContent = '';
+    addBtn.disabled = false;
+    addBtn.textContent = '➕ Ajouter au glossaire';
+    notFoundEl.style.display = 'block';
+  }
+
+  function rechercher() {
+    const saisie = listeInput.value.trim();
+    if (!saisie) return;
+    const entree = glossaire.get(normaliser(saisie));
+    if (entree) {
+      afficherResultat(entree);
+    } else {
+      afficherNonTrouve(saisie);
+    }
+  }
+
+  document.getElementById('search-btn').addEventListener('click', rechercher);
+  listeInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); rechercher(); }
+  });
+
+  addBtn.addEventListener('click', async function () {
+    const terme = notFoundTermeEl.textContent;
+    addBtn.disabled = true;
+    addBtn.textContent = 'Recherche en cours...';
+    addStatusEl.className = '';
+    addStatusEl.textContent = '';
+
+    try {
+      const res = await fetch(WEBAPP_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'ajouterTerme', terme: terme })
+      });
+      const data = await res.json();
+      if (data.status === 'ok' && data.terme) {
+        glossaire.set(normaliser(data.terme.terme), data.terme);
+        majDatalist();
+        afficherResultat(data.terme);
+      } else {
+        throw new Error((data && data.message) || 'Réponse invalide du serveur.');
+      }
+    } catch (err) {
+      addStatusEl.className = 'error';
+      addStatusEl.textContent = "Impossible d'ajouter ce terme pour le moment (" + err.message + "). Réessayez plus tard.";
+      addBtn.disabled = false;
+      addBtn.textContent = '➕ Ajouter au glossaire';
+    }
+  });
+</script>
+
+</body>
+</html>
